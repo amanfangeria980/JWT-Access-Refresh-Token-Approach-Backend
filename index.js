@@ -86,10 +86,16 @@ const posts = [
         username: "Chauhan",
         title: "Post 2",
     },
+    {
+        username: "test",
+        title: "testdata",
+    },
 ];
 app.get("/posts", authenticateToken, (req, res) => {
     console.log(req.name, req);
-    res.json(posts.filter((post) => post.username === req.name));
+    const data=posts.filter((post) => post.username === req.name);
+    console.log(data);
+    res.json(data);
 });
 
 function authenticateToken(req, res, next) {
