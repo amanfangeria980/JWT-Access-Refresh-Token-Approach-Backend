@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors(corsOptions));
 
-const PORT = process.env.AUTH_SERVER_PORT || 4000;
+const PORT = process.env.PORT || 4000;
 
 // Dummy users for demonstration (in a real app, you'd query a database)
 const users = [
