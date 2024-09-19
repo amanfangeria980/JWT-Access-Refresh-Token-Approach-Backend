@@ -8,20 +8,21 @@ app.use(cookieParser());
 const { generateAccessToken, generateRefreshToken } = require("./utils");
 
 const PORT = process.env.AUTH_SERVER_PORT || 4000;
-// let refreshTokens = [];
+
+// Dummy users for demonstration (in a real app, you'd query a database)
+const users = [
+    { username: "test", password: "test" },
+    { username: "ShreyaChauhan", password: "test" },
+    { username: "aman", password: "aman" },
+];
 
 app.post("/token", (req, res) => {
     const refreshToken = req.cookies.refreshToken;
-    console.log(refreshToken);
     if (!refreshToken) return res.sendStatus(401);
-    // if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403);
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
         if (err) return res.sendStatus(403);
         const accessToken = generateAccessToken({ name: user.name });
         const newRefreshToken = generateRefreshToken({ name: user.name });
-
-        // refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
-        // refreshTokens.push(newRefreshToken);
 
         res.cookie("refreshToken", newRefreshToken, {
             httpOnly: true,
@@ -32,16 +33,26 @@ app.post("/token", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-    const username = req.body.username;
-    if (!username)
-        return res.status(400).json({ error: "Username is required" });
-    const user = { name: username };
-    const accessToken = generateAccessToken(user);
-    const refreshToken = generateRefreshToken(user);
-    // refreshTokens.push(refreshToken);
+    const { username, password } = req.body;
+    if (!username || !password) {
+        return res
+            .status(400)
+            .json({ error: "Username and password are required" });
+    }
+
+    // Check if the user exists in the dummy users array (for demo purposes)
+    const user = users.find(
+        (u) => u.username === username && u.password === password
+    );
+    if (!user) {
+        return res.status(403).json({ error: "Invalid username or password" });
+    }
+
+    const accessToken = generateAccessToken({ name: user.username });
+    const refreshToken = generateRefreshToken({ name: user.username });
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        //  secure: true
+        // secure: true
     });
     res.json({ accessToken });
 });
@@ -49,7 +60,6 @@ app.post("/login", (req, res) => {
 app.delete("/logout", (req, res) => {
     const refreshToken = req.cookies.refreshToken;
     if (!refreshToken) return res.sendStatus(401);
-    // refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
     res.clearCookie("refreshToken");
     res.sendStatus(204);
 });
