@@ -31,6 +31,8 @@ app.get("/", (req, res) => {
 
 app.post("/token", (req, res) => {
     const refreshToken = req.cookies.refreshToken;
+    console.log(refreshToken)
+    console.log(JSON.stringify(req.cookies,null,2));
     if (!refreshToken) return res.sendStatus(401);
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
         if (err) return res.sendStatus(403);
