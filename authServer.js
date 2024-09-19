@@ -8,24 +8,23 @@ app.use(cookieParser());
 const { generateAccessToken, generateRefreshToken } = require("./utils");
 
 const PORT = process.env.AUTH_SERVER_PORT || 4000;
-let refreshTokens = [];
+// let refreshTokens = [];
 
 app.post("/token", (req, res) => {
     const refreshToken = req.cookies.refreshToken;
-
     if (!refreshToken) return res.sendStatus(401);
-    if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403);
+    // if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403);
     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
         if (err) return res.sendStatus(403);
         const accessToken = generateAccessToken({ name: user.name });
         const newRefreshToken = generateRefreshToken({ name: user.name });
 
-        refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
-        refreshTokens.push(newRefreshToken);
+        // refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
+        // refreshTokens.push(newRefreshToken);
 
         res.cookie("refreshToken", newRefreshToken, {
             httpOnly: true,
-            secure: true,
+            // secure: true,
         });
         res.json({ accessToken });
     });
@@ -38,8 +37,9 @@ app.post("/login", (req, res) => {
     const user = { name: username };
     const accessToken = generateAccessToken(user);
     const refreshToken = generateRefreshToken(user);
-    refreshTokens.push(refreshToken);
-    res.cookie("refreshToken", refreshToken, { httpOnly: true, secure: true });
+    // refreshTokens.push(refreshToken);
+    // res.cookie("refreshToken", refreshToken, { httpOnly: true, secure: true });
+    res.cookie("refreshToken", refreshToken, { httpOnly: true });
     res.json({ accessToken });
 });
 
