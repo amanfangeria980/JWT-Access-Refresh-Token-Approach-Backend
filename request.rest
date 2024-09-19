@@ -1,0 +1,17 @@
+GET http://localhost:4000/posts
+Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiU2hyZXlhIiwiaWF0IjoxNzI2NzI2MjM3LCJleHAiOjE3MjY3MjYyNTJ9.RYpLTYOknetqor9ogmORtOlq28sLfHX5As1gPqsLq0c
+###
+
+POST http://localhost:4000/token
+Content-Type: application/json 
+{
+"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiU2hyZXlhIiwiaWF0IjoxNzI2NzI2MzQzfQ.14dd9IHNYfb3UQj4oYwQRXLD88PvGAvqg8YBMTxG8bI"
+}
+###
+
+POST http://localhost:4000/login
+Content-Type: application/json
+
+{
+    "username": "Shreya"
+}
