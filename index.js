@@ -23,6 +23,12 @@ const users = [
     { username: "aman", password: "aman" },
 ];
 
+app.get("/", (req, res) => {
+    return res.send(
+        "This is the backend server to demonstrate refresh token and access token approach in JWT to make it more secure."
+    );
+});
+
 app.post("/token", (req, res) => {
     const refreshToken = req.cookies.refreshToken;
     if (!refreshToken) return res.sendStatus(401);
