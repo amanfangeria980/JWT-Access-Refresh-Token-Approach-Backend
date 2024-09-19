@@ -2,10 +2,17 @@ require("dotenv").config();
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const { generateAccessToken, generateRefreshToken } = require("./utils");
 const app = express();
+
+const corsOptions = {
+    origin: "https://jwt-access-refresh-token-approach-frontend.vercel.app",
+    credentials: true,
+};
 app.use(express.json());
 app.use(cookieParser());
-const { generateAccessToken, generateRefreshToken } = require("./utils");
+app.use(cors(corsOptions));
 
 const PORT = process.env.AUTH_SERVER_PORT || 4000;
 
