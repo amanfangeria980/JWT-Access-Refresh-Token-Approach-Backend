@@ -1,22 +1,22 @@
 {
-  "name": "jwt",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "devStart":"nodemon server.js",
-    "devStart2":"nodemon authServer.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "dotenv": "^16.4.5",
-    "express": "^4.21.0",
-    "jsonwebtoken": "^9.0.2"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.5"
-  }
+    "name": "jwt-refresh-access-token-approach",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "devStart": "nodemon server.js",
+        "devStart2": "nodemon authServer.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "dotenv": "^16.4.5",
+        "express": "^4.21.0",
+        "jsonwebtoken": "^9.0.2"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.5"
+    }
 }
