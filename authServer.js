@@ -8,13 +8,16 @@ const PORT=process.env.AUTH_SERVER_PORT || 4000;
 let refreshTokens = [];
 
 app.post("/token", (req, res) => {
-  const refreshToken = req.headers['refreshtoken'].split(' ')[1];
+  let refreshToken = req.headers['refreshtoken'].split(' ')[1];
   if (refreshToken == null) return res.sendStatus(401);
   if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403);
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
     if (err) return res.sendStatus(403);
     const accessToken = generateAccessToken({ name: user.name });
-    res.json({ accessToken: accessToken });
+    refreshToken=jwt.sign({name: user.name}, process.env.REFRESH_TOKEN_SECRET),{expiresIn:"1m"}
+    refreshTokens.pop();
+    refreshTokens.push(refreshToken);
+    res.json({ accessToken: accessToken, refreshToken:refreshToken });
   });
 });
 
