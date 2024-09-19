@@ -7,7 +7,8 @@ const { generateAccessToken, generateRefreshToken } = require("./utils");
 const app = express();
 
 const corsOptions = {
-    origin: "https://jwt-access-refresh-token-approach-frontend.vercel.app",
+    origin: "
+https://jwt-access-refresh-token-approach-backend-2pqr922he.vercel.app",
     credentials: true,
 };
 app.use(express.json());
