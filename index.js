@@ -42,6 +42,7 @@ app.post("/token", (req, res) => {
         res.cookie("refreshToken", newRefreshToken, {
             httpOnly: true,
             secure: true,
+             sameSite: "None",
         });
         res.json({ accessToken });
     });
@@ -67,7 +68,8 @@ app.post("/login", (req, res) => {
     const refreshToken = generateRefreshToken({ name: user.username });
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        secure: true
+        secure: true,
+        sameSite: "None",
     });
     res.json({ accessToken });
 });
